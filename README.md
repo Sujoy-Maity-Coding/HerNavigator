@@ -55,6 +55,7 @@
 ### 13. Emergency Button
 - **Purpose**: Provides an offline emergency messaging option.
 - **Functionality**: Allows users to send emergency messages even in offline mode with a single tap.
+![image](https://github.com/Sujoy-Maity-Coding/HerNavigator/blob/3a9660609bb0b811225caa1b42320b49c4d37a3e/emergency.png)
 
 ### 14. Search
 - **Purpose**: Simplifies app navigation.
