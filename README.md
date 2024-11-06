@@ -1,20 +1,24 @@
 # HerNavigator
 
 **HerNavigator** is a powerful and versatile app created to support women in various aspects of their lives, from personal safety to self-care. This app offers a range of tools designed to address specific needs, making it a valuable companion for every woman.
+![image](https://github.com/Sujoy-Maity-Coding/HerNavigator/blob/5e4ea23baba4431814e4aa27d2a12c924a05b34b/home.png)
 
 ## Features
 
 ### 1. Your Safety
 - **Purpose**: For emergency situations where immediate help is needed.
 - **Functionality**: Allows the user to send a message with their real-time location to a priority contact. Uses Google Location Service for location tracking and sharing.
+- ![image](https://github.com/Sujoy-Maity-Coding/HerNavigator/blob/5e4ea23baba4431814e4aa27d2a12c924a05b34b/security.png)
 
 ### 2. Low Your Period Pain
 - **Purpose**: Provides relief options for menstrual discomfort.
 - **Functionality**: The user can describe their pain or issue, and the tool generates exercise suggestions and solutions for pain relief using **Gemini AI**.
+- ![image](https://github.com/Sujoy-Maity-Coding/HerNavigator/blob/5e4ea23baba4431814e4aa27d2a12c924a05b34b/period.png)
 
 ### 3. Pregnancy Tracker
 - **Purpose**: Guides women through their pregnancy.
 - **Functionality**: Generates weekly pregnancy tips based on the user's current month of pregnancy. Powered by **Gemini AI**.
+- ![image](https://github.com/Sujoy-Maity-Coding/HerNavigator/blob/5e4ea23baba4431814e4aa27d2a12c924a05b34b/prag.png)
 
 ### 4. Fashion Tips
 - **Purpose**: Offers personalized outfit ideas.
