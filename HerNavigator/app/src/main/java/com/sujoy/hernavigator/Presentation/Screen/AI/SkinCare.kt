@@ -29,7 +29,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -46,9 +49,9 @@ fun SkinCare(modifier: Modifier = Modifier,
              navController: NavHostController = rememberNavController()) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val dataLsit = listOf(
-        HomeData(R.drawable.pimple, "Pimple\nReduction", Routes.pimpleReduction),
-        HomeData(R.drawable.skin, "Weather\nWise Routine", Routes.weatherSkin),
-        HomeData(R.drawable.skin_glow, "Glow Your\nSkin", Routes.skinGlow)
+        HomeData(R.drawable.pimple, "Pimple Reduction", Routes.pimpleReduction),
+        HomeData(R.drawable.skin, "Weather Wise Routine", Routes.weatherSkin),
+        HomeData(R.drawable.skin_glow, "Glow Your Skin", Routes.skinGlow)
     )
 
     Scaffold(
@@ -69,7 +72,10 @@ fun SkinCare(modifier: Modifier = Modifier,
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate(Routes.Home)}) {
+                    IconButton(onClick = { navController.navigate(Routes.Home){
+                        popUpTo(navController.graph.startDestinationId) { inclusive = true } // Clears back stack up to start destination
+                        launchSingleTop = true  // Prevents duplicate instances
+                    }}) {
                         Icon(Icons.Default.Home, contentDescription = "home", tint = Color.White)
                     }
                 }
@@ -97,12 +103,14 @@ fun SkinCare(modifier: Modifier = Modifier,
                     elevation = CardDefaults.cardElevation(10.dp)
                 ) {
                     Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(10.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Image(
-                            painter = androidx.compose.ui.res.painterResource(id = it.image),
+                            painter = painterResource(id = it.image),
                             contentDescription = null
                         )
                         Text(
@@ -110,7 +118,11 @@ fun SkinCare(modifier: Modifier = Modifier,
                             fontFamily = playFairDisplay,
                             fontWeight = FontWeight.Bold,
                             fontSize = 25.sp,
-                            color = Pink
+                            color = Pink,
+                            maxLines = 2, // Ensure text stays within two lines
+                            overflow = TextOverflow.Ellipsis, // Truncate the overflowed text
+                            textAlign = TextAlign.Center, // Center the text inside the card
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
                 }

@@ -100,7 +100,10 @@ fun CycleTrackerScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate(Routes.Home)}) {
+                    IconButton(onClick = { navController.navigate(Routes.Home){
+                        popUpTo(navController.graph.startDestinationId) { inclusive = true } // Clears back stack up to start destination
+                        launchSingleTop = true  // Prevents duplicate instances
+                    }}) {
                         Icon(Icons.Default.Home, contentDescription = "home", tint = Color.White)
                     }
                 },

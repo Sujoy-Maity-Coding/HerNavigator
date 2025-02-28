@@ -1,10 +1,14 @@
 package com.sujoy.hernavigator.Presentation.NavigationGraph
 
+import com.sujoy.hernavigator.Api.data.apiDataModel.Article
 import kotlinx.serialization.Serializable
 
 sealed class Routes{
     @Serializable
-    object SplashScreen: Routes()
+    object Login:Routes()
+
+    @Serializable
+    object SignUp:Routes()
 
     @Serializable
     object Home : Routes()
@@ -77,4 +81,25 @@ sealed class Routes{
 
     @Serializable
     object loadingScreen : Routes()
+
+    @Serializable
+    object NewsScreen : Routes()
+
+    @Serializable
+    object StartScreen:Routes()
+
+    @Serializable
+    object Tools:Routes()
+
+    @Serializable
+    object Profile:Routes()
+
+    @Serializable
+    object AllFashionImage:Routes()
+
+    @Serializable
+    object FashionDetails:Routes()
+
+    @Serializable
+    object FashionItem:Routes()
 }

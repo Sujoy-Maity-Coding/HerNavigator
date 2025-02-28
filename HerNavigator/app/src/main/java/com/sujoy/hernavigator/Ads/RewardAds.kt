@@ -17,7 +17,7 @@ fun rewaredAds(activity: Activity, navController: NavHostController,onAdLoaded: 
                onAdFailed: () -> Unit) {
     RewardedAd.load(
         activity,
-        "",
+        "ca-app-pub-3940256099942544/5224354917",
         AdRequest.Builder().build(),
         object : RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(p0: LoadAdError) {

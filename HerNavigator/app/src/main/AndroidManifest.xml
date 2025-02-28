@@ -6,7 +6,6 @@
         android:name="android.hardware.telephony"
         android:required="false" />
 
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -16,6 +15,8 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
 
     <application
@@ -40,9 +41,20 @@
             </intent-filter>
         </activity>
         <receiver android:name="com.sujoy.hernavigator.Presentation.Screen.SelfCare.AlarmReceiver" android:exported="true" />
+        <receiver android:name=".Presentation.Util.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value=""/>
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="remoteMessaging"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

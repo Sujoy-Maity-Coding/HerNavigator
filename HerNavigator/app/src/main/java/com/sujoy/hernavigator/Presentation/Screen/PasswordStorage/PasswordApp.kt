@@ -67,7 +67,10 @@ import com.sujoy.hernavigator.ui.theme.playFairDisplay
 @Preview(showSystemUi = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordApp(viewModel: PasswordViewModel = viewModel(), navController: NavHostController) {
+fun PasswordApp(
+    viewModel: PasswordViewModel = viewModel(),
+    navController: NavHostController
+) {
     var isAuthenticated by remember { mutableStateOf(false) }
     var enteredPassword by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -90,7 +93,10 @@ fun PasswordApp(viewModel: PasswordViewModel = viewModel(), navController: NavHo
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate(Routes.Home)}) {
+                    IconButton(onClick = { navController.navigate(Routes.Home){
+                        popUpTo(navController.graph.startDestinationId) { inclusive = true } // Clears back stack up to start destination
+                        launchSingleTop = true  // Prevents duplicate instances
+                    }}) {
                         Icon(Icons.Default.Home, contentDescription = "home", tint = Color.White)
                     }
                 }

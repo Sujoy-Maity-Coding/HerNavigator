@@ -28,16 +28,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -62,6 +57,7 @@ import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
+import com.sujoy.hernavigator.Api.data.Pref.UserPreferences
 import com.sujoy.hernavigator.Model.HomeData
 import com.sujoy.hernavigator.Presentation.NavigationGraph.Routes
 import com.sujoy.hernavigator.R
@@ -69,6 +65,10 @@ import com.sujoy.hernavigator.ViewModel.SafetyViewModel
 import com.sujoy.hernavigator.ui.theme.FadeBlue
 import com.sujoy.hernavigator.ui.theme.Pink
 import com.sujoy.hernavigator.ui.theme.playFairDisplay
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun DrawerContent(
@@ -78,7 +78,8 @@ fun DrawerContent(
     context: Context,
     safetyViewModel: SafetyViewModel,
     context2: Context,
-    imageLoader: ImageLoader
+    imageLoader: ImageLoader,
+    userPreferences: UserPreferences
 ) {
     // Drawer content with padding and alignment
     Column(
@@ -206,6 +207,54 @@ fun DrawerContent(
                 color = Color.DarkGray
             )
         }
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+            .clickable {
+                navController.navigate(Routes.NewsScreen)
+            }
+            .padding(vertical = 8.dp)) {
+            Image(
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(context2).data(data = R.drawable.newspaper).apply(block = {
+                        size(Size.ORIGINAL)
+                    }).build(), imageLoader = imageLoader
+                ),
+                colorFilter = ColorFilter.tint(Color.DarkGray),
+                contentDescription = "news",
+                modifier = Modifier.size(30.dp)
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Text(
+                text = "News",
+                fontSize = 20.sp,
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.DarkGray
+            )
+        }
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+            .clickable {
+                navController.navigate(Routes.AllFashionImage)
+            }
+            .padding(vertical = 8.dp)) {
+            Image(
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(context2).data(data = R.drawable.outfit).apply(block = {
+                        size(Size.ORIGINAL)
+                    }).build(), imageLoader = imageLoader
+                ),
+                colorFilter = ColorFilter.tint(Color.DarkGray),
+                contentDescription = "outfit",
+                modifier = Modifier.size(30.dp)
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Text(
+                text = "Trending Fashion",
+                fontSize = 20.sp,
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.DarkGray
+            )
+        }
         val showAboutDialog = remember { mutableStateOf(false) }
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
             .clickable {
@@ -280,7 +329,6 @@ fun DrawerContent(
 
         // Add spacer to push the Help button to the bottom
         Spacer(modifier = Modifier.weight(1f))
-
         // Help button placed at the bottom
         Row(verticalAlignment = Alignment.CenterVertically) {
             val context = LocalContext.current
@@ -461,6 +509,45 @@ fun DrawerContent(
                     containerColor = Color.White
                 )
             }
+        }
+
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+            .clickable {
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        userPreferences.saveUserId("") // Clearing User ID for logout
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(context, "Logout Successful!", Toast.LENGTH_SHORT).show()
+                            navController.navigate(Routes.Login) {
+                                popUpTo(Routes.Home) { inclusive = true }
+                            }
+                        }
+                    } catch (e: Exception) {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(context, "Logout Failed! Try Again.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+            .padding(vertical = 8.dp)) {
+            Image(
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(context2).data(data = R.drawable.log_out).apply(block = {
+                        size(Size.ORIGINAL)
+                    }).build(), imageLoader = imageLoader
+                ),
+                colorFilter = ColorFilter.tint(Color.DarkGray),
+                contentDescription = "log_out",
+                modifier = Modifier.size(30.dp)
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Text(
+                text = "Log Out",
+                fontSize = 20.sp,
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.SemiBold,
+                color = Color.DarkGray
+            )
         }
     }
 }

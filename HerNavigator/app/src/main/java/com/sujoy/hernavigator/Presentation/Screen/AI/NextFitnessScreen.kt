@@ -43,7 +43,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -65,7 +68,7 @@ fun NextFitnessScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
     val dataList = listOf(
         HomeData(R.drawable.excercise, "Exercise", Routes.Excercise),
-        HomeData(R.drawable.diet, "Diet\nPlanner", Routes.DietPlan)
+        HomeData(R.drawable.diet, "Diet Planner", Routes.DietPlan)
     )
     val dietPlanResult = viewModel.dietPlannerResult.collectAsState().value
     val excerciseResult=viewModel.excerciseResult.collectAsState().value
@@ -92,7 +95,10 @@ fun NextFitnessScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate(Routes.Home)}) {
+                    IconButton(onClick = { navController.navigate(Routes.Home) {
+                        popUpTo(navController.graph.startDestinationId) { inclusive = true } // Clears back stack up to start destination
+                        launchSingleTop = true  // Prevents duplicate instances
+                    }}) {
                         Icon(Icons.Default.Home, contentDescription = "home", tint = Color.White)
                     }
                 }
@@ -146,12 +152,14 @@ fun NextFitnessScreen(
                     elevation = CardDefaults.cardElevation(10.dp)
                 ) {
                     Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(10.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Image(
-                            painter = androidx.compose.ui.res.painterResource(id = item.image),
+                            painter = painterResource(id = item.image),
                             contentDescription = null
                         )
                         Text(
@@ -159,7 +167,11 @@ fun NextFitnessScreen(
                             fontFamily = playFairDisplay,
                             fontWeight = FontWeight.Bold,
                             fontSize = 25.sp,
-                            color = Pink
+                            color = Pink,
+                            maxLines = 2, // Ensure text stays within two lines
+                            overflow = TextOverflow.Ellipsis, // Truncate the overflowed text
+                            textAlign = TextAlign.Center, // Center the text inside the card
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
                 }

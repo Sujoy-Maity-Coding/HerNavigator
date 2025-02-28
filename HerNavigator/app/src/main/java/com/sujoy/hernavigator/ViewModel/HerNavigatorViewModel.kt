@@ -1,8 +1,6 @@
 package com.sujoy.hernavigator.ViewModel
 
-import android.content.Context
 import android.graphics.Bitmap
-import android.widget.Toast
 import androidx.compose.ui.text.AnnotatedString
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,11 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
-import com.sujoy.hernavigator.Constant
+import com.sujoy.hernavigator.Api.Constant
 import com.sujoy.hernavigator.Model.FitnessData
 import com.sujoy.hernavigator.Presentation.Util.formatText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -67,8 +66,14 @@ class HerNavigatorViewModel() : ViewModel() {
     private val _excerciseResult = MutableStateFlow<AnnotatedString?>(null)
     val excerciseResult = _excerciseResult.asStateFlow()
 
+    private val _fashionResult = MutableStateFlow<AnnotatedString?>(null)
+    val fashionResult = _fashionResult.asStateFlow()
+
     private val _fitnessData = MutableLiveData<FitnessData>()
     val fitnessData: LiveData<FitnessData> = _fitnessData
+
+    private val _selectedImageBitmap = MutableStateFlow<Bitmap?>(null)
+    val selectedImageBitmap: StateFlow<Bitmap?> = _selectedImageBitmap
 
     fun pregnencyTrackerGenerator(week: String) {
         val prompt: String =
@@ -116,6 +121,35 @@ class HerNavigatorViewModel() : ViewModel() {
                 _colourMatchResult.value = result.text?.let { formatText(it) }
             } catch (e: Exception) {
                 _colourMatchResult.value = AnnotatedString("Error: ${e.localizedMessage}")
+            }
+        }
+    }
+
+    fun setSelectedImage(bitmap: Bitmap) {
+        _selectedImageBitmap.value = bitmap
+    }
+
+    fun fashionGenerator(imageBitmap: Bitmap) {
+        val prompt = "Analyze the given image of a person and provide the following details:\n" +
+                "- Dress color (top wear)\n" +
+                "- Skin tone (light, medium, dark)\n" +
+                "- Bottom wear color\n" +
+                "- The likely occasion (casual, formal, festive, traditional, etc.)\n" +
+                "Ensure the response is clear and structured."
+
+        _fashionResult.value = AnnotatedString("Loading ...")
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val result = generativeModelImg.generateContent(
+                    content {
+                        text(prompt)
+                        image(imageBitmap)
+                    }
+                )
+                _fashionResult.value = result.text?.let { formatText(it) }
+            } catch (e: Exception) {
+                _fashionResult.value = AnnotatedString("Error: ${e.localizedMessage}")
             }
         }
     }
