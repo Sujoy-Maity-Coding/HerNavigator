@@ -1,7 +1,7 @@
 # HerNavigator
 
 HerNavigator is a powerful and versatile app designed to support women in various aspects of their lives, from personal safety to self-care. This app offers a range of tools to address specific needs, making it a valuable companion for every woman.
-![image]("image/Plant Care (1).jpg)")
+![image](https://github.com/Sujoy-Maity-Coding/HerNavigator/blob/2b9366ec71c113c76c9c07245de8ff32d8be4af7/image/Plant%20Care%20(1).jpg)
 
 ## Features
 
@@ -95,7 +95,7 @@ HerNavigator is a powerful and versatile app designed to support women in variou
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/HerNavigator.git
+   git clone https://github.com/Sujoy-Maity-Coding/HerNavigator.git
    ```
 2. Navigate to the project directory:
    ```bash
@@ -136,8 +136,8 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Contact
 
 For any inquiries, feel free to reach out:
-- **Email:** your-email@example.com
-- **GitHub:** [your-username](https://github.com/your-username)
+- **Email:** sujoymaity526@gmail.com
+- **GitHub:** [Sujoy Maity](https://github.com/Sujoy-Maity-Coding)
 
 ---
 
